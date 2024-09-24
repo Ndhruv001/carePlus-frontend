@@ -35,12 +35,41 @@ const PopularTableAnalytics = () => {
       data: memoizedData,
     });
 
-  const getPopularityShade = (popularity) => {
+  //  NOT VISIBLE IN THE DARK THEME
+  // const getPopularityShade = (popularity) => {
+  //   const maxPopularity = Math.max(
+  //     ...memoizedData.map((doc) => doc.appointment_count)
+  //   );
+  //   const shade = Math.round((popularity / maxPopularity) * 255);
+  //   return `rgba(0, 128, 0, ${shade / 255})`; // Darker green for most popular
+  // };
+
+  const getPopularityShade = (popularity, isDarkTheme = false) => {
     const maxPopularity = Math.max(
       ...memoizedData.map((doc) => doc.appointment_count)
     );
-    const shade = Math.round((popularity / maxPopularity) * 255);
-    return `rgba(0, 128, 0, ${shade / 255})`; // Darker green for most popular
+    
+    // Normalize popularity to a value between 0 and 1
+    const normalizedPopularity = popularity / maxPopularity;
+    
+    // Create a color scale from red (least popular) to green (most popular)
+    const r = Math.round(255 * (1 - normalizedPopularity));
+    const g = Math.round(255 * normalizedPopularity);
+    const b = 0;
+    
+    // Adjust brightness based on the theme
+    const brightness = isDarkTheme ? 0.8 : 0.3; // Brighter for dark theme, darker for light theme
+    
+    // Ensure text is visible by setting a minimum brightness
+    const minBrightness = isDarkTheme ? 0.4 : 0.2;
+    const adjustedBrightness = Math.max(brightness, minBrightness);
+    
+    // Apply brightness adjustment
+    const adjustedR = Math.round(r * adjustedBrightness);
+    const adjustedG = Math.round(g * adjustedBrightness);
+    const adjustedB = Math.round(b * adjustedBrightness);
+    
+    return `rgb(${adjustedR}, ${adjustedG}, ${adjustedB})`;
   };
 
   if (isLoading) return <LoadingPage />;
