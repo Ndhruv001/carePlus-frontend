@@ -2,13 +2,14 @@ import DataContainer from "@/components/DataContainer";
 import Container from "@/components/Container";
 import Button from "@/components/Button";
 import H4 from "@/components/H4";
+import downloadSynopsis from "./downloadSynopsis";
 
 function AdminReports() {
   return (
     <Container>
       <DataContainer>
-        <H4>System Usage Reports</H4>
-        <Button color="green">Generate New Report</Button>
+        <H4>Synopsis</H4>
+        <Button color="green" onClick={downloadSynopsis}>Download Synopsis</Button>
       </DataContainer>
 
       <DataContainer>
