@@ -52,10 +52,8 @@ const AddMedicalRecord = ({ isOpen, onClose, appointment }) => {
     if (showPrescription) {
       const formattedDosage = `${data.dosage_mg}, ${data.dosage_tablets} ${data.dosage_frequency.toLowerCase()}`;
       payload = {
-        prescription: {
-          medication_name: data.medication_name,
-          dosage: formattedDosage,
-        },
+        medication_name: data.medication_name,
+        dosage: formattedDosage,
         appointment_id: appointment.id,
         patient_id: appointment.patient_id,
         medical_record: medicalRecordData,
